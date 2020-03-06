@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
+use App\Trip;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        User::truncate();
+        Trip::truncate();
+
+        $usersQuantity = 50;
+        factory(User::class, $usersQuantity)->create();
+
+        $this->call(TripsTableSeeder::class);
     }
 }
