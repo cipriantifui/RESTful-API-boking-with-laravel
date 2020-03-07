@@ -28,4 +28,9 @@ class User extends Authenticatable
         'password'
     ];
 
+    public function bookings()
+    {
+        return $this->hasMany('App\Booking', 'user_id', 'id');
+    }
+
 }
