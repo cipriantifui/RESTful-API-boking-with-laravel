@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Trip;
 use Illuminate\Http\Request;
-use App\Factories\UserFactory;
-use App\Http\Requests\Api\CreateUserRequest;
-use App\Http\Requests\Api\UpdateUserRequest;
+use App\Factories\TripFactory;
 
-class UserController extends Controller
+class TripController extends Controller
 {
-    private $userRepository;
+    private $tripRepository;
 
-    public function  __construct(UserFactory $userFactory)
+    public function  __construct(TripFactory $tripFactory)
     {
-        $this->userRepository = $userFactory::createApi();
+        $this->tripRepository = $tripFactory::createApi();
     }
 
     /**
@@ -24,9 +22,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->userRepository->getAll();
+        $trip = $this->tripRepository->getAll();
         
-        return $users;
+        return $trip;
     }
 
     /**
@@ -35,20 +33,27 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(Request $request)
     {
-        return response($this->userRepository->insert($request), 201);
+        return response($this->tripRepository->insert($request), 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string  $slug
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request)
     {
-        return $this->userRepository->get('id', $user->id);
+        return $this->tripRepository->get('slug', $request ->slug);
+    }
+
+    public function search(Request $request)
+    {
+        $trip = $this->tripRepository->filter($request);
+        
+        return $trip;
     }
 
     /**
@@ -58,9 +63,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, Trip $trip)
     {
-        return response($this->userRepository->update($request, $user), 200);
+        return response($this->tripRepository->update($request, $trip), 200);
     }
 
     /**
@@ -69,9 +74,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Trip $trip)
     {
-        $this->userRepository->delete($user);
+        $this->tripRepository->delete($trip);
 
         return response('Deleted', 200);
     }

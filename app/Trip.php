@@ -15,7 +15,7 @@ class Trip extends Model
      * @var array
      */
     protected $fillable = [
-        'slug', 'title', 'description', 'start_date', "end_date", "location"
+        'slug', 'title', 'description', 'start_date', "end_date", "location", "price"
     ];
 
     public function bookings()

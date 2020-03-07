@@ -19,3 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::resource('users', 'UserController');
+
+Route::get('trips/search', 'TripController@search');
+Route::get('trips/{slug}', 'TripController@show');
+Route::resource('trips', 'TripController');

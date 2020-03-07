@@ -21,6 +21,7 @@ class CreateTripsTable extends Migration
             $table->dateTime("start_date");
             $table->dateTime("end_date");
             $table->string("location");
+            $table->decimal("price", 8, 2);
             $table->timestamps();
         });
     }

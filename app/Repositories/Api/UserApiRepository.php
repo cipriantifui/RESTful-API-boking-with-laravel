@@ -16,24 +16,24 @@ class UserApiRepository implements RepositoryInterface
 		return User::where($type, $value)->first()->toJson();
     }
     
-    public function getAll($order = null, $limit = null)
+    public function getAll($order = 'asc', $limit = 50)
 	{
 		$user = null;
 		if($order === null && $limit === null):
 			$user =  User::all()
 			->toJson();
 		elseif($order !== null && $limit === null):
-			$user = User::all()
+			$user = User::query()
 			->orderBy('id', $order)
 			->get()
 			->toJson();
 		elseif($order === null && $limit !== null):
-            $user = User::all()
+            $user = User::query()
 			->limit($limit)
             ->get()
             ->toJson();
 		else:
-			$user = User::all()
+			$user = User::query()
 			->orderBy('id', $order)
 			->take($limit)
 			->get()
