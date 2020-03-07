@@ -3,6 +3,8 @@ namespace App\Repositories\Api;
 
 use App\Booking;
 use App\Interfaces\RepositoryInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookingApiRepository implements RepositoryInterface
 {
@@ -19,6 +21,21 @@ class BookingApiRepository implements RepositoryInterface
             ->get()
             ->toJson();
 
+    }
+
+    public function insert(Request $request)
+	{
+
+		$booking = Booking::create([
+                        'user_id' => Auth::id(),
+                        'trip_id' => $request->input('trip_id'),
+                        'start_date' => $request->input('start_date'),
+                        'end_date' => $request->input('end_date'),
+                        'rooms' => $request->input('rooms'),
+                        'guests' => $request->input('guests'),
+        ]);
+		
+		return $booking->toJson();
     }
 
 }

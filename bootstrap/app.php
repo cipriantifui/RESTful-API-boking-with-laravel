@@ -40,6 +40,8 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
+// Uncomment this line
+$app->register(App\Providers\AuthServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

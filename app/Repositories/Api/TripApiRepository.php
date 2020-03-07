@@ -5,7 +5,6 @@ namespace App\Repositories\Api;
 use App\Interfaces\FilterRepositoryInterface;
 use App\Trip;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 
 class TripApiRepository implements FilterRepositoryInterface {

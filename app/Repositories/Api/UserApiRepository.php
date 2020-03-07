@@ -7,7 +7,11 @@ use Illuminate\Http\Response;
 use App\Interfaces\RepositoryInterface;
 use App\Http\Requests\Api\CreateUserRequest;
 use App\Http\Requests\Api\UpdateUserRequest;
+use App\Http\Requests\Api\RegisterRequest;
+use App\Http\Requests\Api\LoginRequest;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class UserApiRepository implements RepositoryInterface
 {
@@ -71,5 +75,35 @@ class UserApiRepository implements RepositoryInterface
 	public function delete(User $user)
 	{
 		$user->delete();
+	}
+
+	public function create(RegisterRequest $request)
+	{
+		//Create user, generate token and return
+        $user =  User::create([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ]);
+		
+		$token = JWTAuth::fromUser($user);
+        return response()->json(compact('token'));
+	}
+
+	public function login(LoginRequest $request)
+	{
+		//Attempt validation
+        $credentials = $request->only(['email','password']);
+
+		try {
+			if (! $token = JWTAuth::attempt($credentials)) {
+				return response()->json(['error' => 'invalid_credentials'], 400);
+			}
+		} catch (JWTException $e) {
+			return response()->json(['error' => 'could_not_create_token'], 500);
+		}
+
+		return response()->json(compact('token'));
 	}
 }

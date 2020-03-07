@@ -33,7 +33,7 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response($this->bookingRepository->insert($request), 201);
     }
 
     /**
