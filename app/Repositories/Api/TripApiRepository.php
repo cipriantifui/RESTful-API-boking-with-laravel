@@ -16,8 +16,8 @@ class TripApiRepository implements FilterRepositoryInterface {
 
     public function getAll($order = 'desc', $limit = 50) {
         return Trip::query()
-            ->take($limit)
             ->orderBy('id', $order)
+            ->take($limit)
             ->get()
             ->toJson();
 

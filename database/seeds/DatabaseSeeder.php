@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\User;
 use App\Trip;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,10 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::truncate();
-        Trip::truncate();
 
-        $usersQuantity = 50;
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        DB::table('users')->truncate();
+        DB::table('trips')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+        $usersQuantity = 20;
         factory(User::class, $usersQuantity)->create();
 
         $this->call(TripsTableSeeder::class);

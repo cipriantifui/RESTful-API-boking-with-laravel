@@ -2,10 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Booking;
 use Illuminate\Http\Request;
+use App\Factories\BookingFactory;
 
-class BookingControler extends Controller
+class BookingController extends Controller
 {
+    private $bookingRepository;
+
+    public function  __construct(BookingFactory $bookingFactory)
+    {
+        $this->bookingRepository = $bookingFactory::createApi();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,17 +21,8 @@ class BookingControler extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $reservations = $this->bookingRepository->getAll();
+        return $reservations;
     }
 
     /**
@@ -45,18 +44,7 @@ class BookingControler extends Controller
      */
     public function show($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->bookingRepository->get('id', $id);
     }
 
     /**

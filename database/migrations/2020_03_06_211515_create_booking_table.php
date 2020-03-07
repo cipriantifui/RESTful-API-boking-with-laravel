@@ -18,7 +18,7 @@ class CreateBookingTable extends Migration
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign("user_id")->references('id')->on('users');
             $table->bigInteger('trip_id')->unsigned()->index();
-            $table->foreign("trip_id")->references('id')->on('users');
+            $table->foreign("trip_id")->references('id')->on('trips');
             $table->dateTime("start_date");
             $table->dateTime("end_date");
             $table->smallInteger("rooms");
