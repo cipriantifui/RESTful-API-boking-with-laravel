@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use App\Factories\UserFactory;
+use App\Http\Requests\Api\CreateUserRequest;
+use App\Http\Requests\Api\UpdateUserRequest;
 
 class UserController extends Controller
 {
-    private $user;
+    private $userRepository;
 
     public function  __construct(UserFactory $user)
     {
-        $this->user = $user::createApi();
+        $this->userRepository = $user::createApi();
     }
 
     /**
@@ -22,7 +24,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->user->getAll();
+        $users = $this->userRepository->getAll();
         
         return $users;
     }
@@ -33,9 +35,9 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
-        //
+        return response($this->userRepository->insert($request), 201);
     }
 
     /**
@@ -46,7 +48,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $this->user->get('id', $user->id);
+        return $this->userRepository->get('id', $user->id);
     }
 
     /**
@@ -56,9 +58,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        return response($this->userRepository->update($request, $user), 200);
     }
 
     /**
@@ -67,8 +69,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $this->userRepository->delete($user);
+
+        return response('Deleted', 200);
     }
 }

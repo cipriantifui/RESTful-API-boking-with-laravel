@@ -4,5 +4,5 @@ namespace App\Interfaces;
 
 interface FactoryInterface
 {
-	static public function create();
+	static public function createApi();
 }
