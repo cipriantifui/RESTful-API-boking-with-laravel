@@ -4,9 +4,17 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Factories\UserFactory;
 
 class UserController extends Controller
 {
+    private $user;
+
+    public function  __construct(UserFactory $user)
+    {
+        $this->user = $user::createApi();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = $this->user->getAll();
         
         return $users;
     }
@@ -38,7 +46,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return $this->showOne($user);
+        return $this->user->get('id', $user->id);
     }
 
     /**
