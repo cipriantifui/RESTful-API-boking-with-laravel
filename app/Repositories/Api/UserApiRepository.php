@@ -12,7 +12,7 @@ class UserApiRepository implements RepositoryInterface
 {
     public function get($type, $value)
 	{
-		return User::where($type, $value)->first()->toJson();
+		User::where($type, $value)->first()->toJson();
     }
     
     public function getAll($order = 'asc', $limit = 50)

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class UpdateBookingRequest extends FormRequest
 {
      /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:6'
+            'start_date' => 'required',
+            'end_date' => 'required',
+            'rooms' => 'required',
+            'guests' => 'required'
         ];
     }
 }

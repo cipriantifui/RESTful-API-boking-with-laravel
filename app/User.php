@@ -32,7 +32,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function bookings()
     {
-        return $this->hasMany('App\Booking', 'user_id', 'id');
+        return $this->hasMany('App\Booking', 'id', 'user_id');
     }
 
     public function getJWTIdentifier()

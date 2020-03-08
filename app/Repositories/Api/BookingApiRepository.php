@@ -5,17 +5,22 @@ use App\Booking;
 use App\Interfaces\RepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Api\UpdateBookingRequest;
+use App\Http\Requests\Api\CreateBookingRequest;
 
 class BookingApiRepository implements RepositoryInterface
 {
     public function get($type, $value)
 	{
-		return Booking::where($type, $value)->first()->toJson();
+        return Booking::where($type, $value)
+                ->where("user_id", Auth::id())
+                ->first()->toJson();
     }
 
     public function getAll($order = 'desc', $limit = 50) {
 
         return Booking::query()
+            ->where("user_id", Auth::id())
             ->orderBy('id', $order)
             ->take($limit)
             ->get()
@@ -23,7 +28,7 @@ class BookingApiRepository implements RepositoryInterface
 
     }
 
-    public function insert(Request $request)
+    public function insert(CreateBookingRequest $request)
 	{
 
 		$booking = Booking::create([
@@ -38,9 +43,8 @@ class BookingApiRepository implements RepositoryInterface
 		return $booking->toJson();
     }
 
-    public function update(Request $request, Booking $booking)
+    public function update(UpdateBookingRequest $request, Booking $booking)
 	{
-		//Update
 		$booking->update([
             'start_date' => $request->input('start_date'),
             'end_date' => $request->input('end_date'),
@@ -49,6 +53,11 @@ class BookingApiRepository implements RepositoryInterface
 		]);
 		
         return $booking->toJson();
+    }
+    
+    public function delete(Booking $booking)
+	{
+		$booking->delete();
 	}
 
 }

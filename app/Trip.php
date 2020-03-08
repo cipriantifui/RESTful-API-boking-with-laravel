@@ -20,6 +20,6 @@ class Trip extends Model
 
     public function bookings()
     {
-        return $this->hasMany('App\Booking', 'trip_id', 'id');
+        return $this->hasMany('App\Booking', 'id', 'trip_id');
     }
 }

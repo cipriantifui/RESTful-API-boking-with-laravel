@@ -73,6 +73,6 @@ class UserController extends Controller
     {
         $this->userRepository->delete($user);
 
-        return response('Deleted', 200);
+        return response('Deleted', 404);
     }
 }

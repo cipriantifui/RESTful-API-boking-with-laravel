@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Booking;
 use Illuminate\Http\Request;
 use App\Factories\BookingFactory;
+use App\Http\Requests\Api\UpdateBookingRequest;
+use App\Http\Requests\Api\CreateBookingRequest;
 
 class BookingController extends Controller
 {
@@ -31,7 +33,7 @@ class BookingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateBookingRequest $request)
     {
         return response($this->bookingRepository->insert($request), 201);
     }
@@ -51,12 +53,12 @@ class BookingController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Booking $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Booking $booking)
+    public function update(UpdateBookingRequest $request, Booking $booking)
     {
-        return response($this->bookingRepository->update($request, $booking), 200);
+        return response($this->bookingRepository->update($request, $booking));
     }
 
     /**
@@ -65,8 +67,9 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Booking $booking)
     {
-        //
+        return response($this->bookingRepository->delete($booking), 404);
+
     }
 }
