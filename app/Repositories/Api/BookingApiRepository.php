@@ -3,10 +3,9 @@ namespace App\Repositories\Api;
 
 use App\Booking;
 use App\Interfaces\RepositoryInterface;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Api\UpdateBookingRequest;
-use App\Http\Requests\Api\CreateBookingRequest;
+use App\Http\Requests\Api\BookingModifyRequest;
+use App\Http\Requests\Api\BookingStoreRequest;
 
 class BookingApiRepository implements RepositoryInterface
 {
@@ -17,8 +16,8 @@ class BookingApiRepository implements RepositoryInterface
                 ->first()->toJson();
     }
 
-    public function getAll($order = 'desc', $limit = 50) {
-
+    public function getAll($order = 'desc', $limit = 50) 
+    {
         return Booking::query()
             ->where("user_id", Auth::id())
             ->orderBy('id', $order)
@@ -28,7 +27,7 @@ class BookingApiRepository implements RepositoryInterface
 
     }
 
-    public function insert(CreateBookingRequest $request)
+    public function insert(BookingStoreRequest $request)
 	{
 
 		$booking = Booking::create([
@@ -43,8 +42,10 @@ class BookingApiRepository implements RepositoryInterface
 		return $booking->toJson();
     }
 
-    public function update(UpdateBookingRequest $request, Booking $booking)
+    public function update(BookingModifyRequest $request, Booking $booking)
 	{
+        Booking::findOrFail($booking->id);
+
 		$booking->update([
             'start_date' => $request->input('start_date'),
             'end_date' => $request->input('end_date'),
@@ -57,6 +58,8 @@ class BookingApiRepository implements RepositoryInterface
     
     public function delete(Booking $booking)
 	{
+        Booking::findOrFail($booking->id);
+
 		$booking->delete();
 	}
 

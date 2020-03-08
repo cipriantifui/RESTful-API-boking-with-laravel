@@ -2,9 +2,13 @@
 
 namespace App\Http\Requests\Api;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateBookingRequest extends FormRequest
+class BookingModifyRequest extends FormRequest
 {
      /**
      * Determine if the user is authorized to make this request.
@@ -29,5 +33,12 @@ class UpdateBookingRequest extends FormRequest
             'rooms' => 'required',
             'guests' => 'required'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = (new ValidationException($validator))->errors();
+        throw new HttpResponseException(response()->json(['errors' => $errors
+        ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
     }
 }

@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Booking;
 use Illuminate\Http\Request;
 use App\Factories\BookingFactory;
-use App\Http\Requests\Api\UpdateBookingRequest;
-use App\Http\Requests\Api\CreateBookingRequest;
+use App\Http\Requests\Api\BookingModifyRequest;
+use App\Http\Requests\Api\BookingStoreRequest;
 
 class BookingController extends Controller
 {
@@ -33,7 +33,7 @@ class BookingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateBookingRequest $request)
+    public function store(BookingStoreRequest $request)
     {
         return response($this->bookingRepository->insert($request), 201);
     }
@@ -46,6 +46,7 @@ class BookingController extends Controller
      */
     public function show($id)
     {
+        Booking::findOrFail($id);
         return $this->bookingRepository->get('id', $id);
     }
 
@@ -56,7 +57,7 @@ class BookingController extends Controller
      * @param  Booking $booking
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateBookingRequest $request, Booking $booking)
+    public function update(BookingModifyRequest $request, Booking $booking)
     {
         return response($this->bookingRepository->update($request, $booking));
     }
