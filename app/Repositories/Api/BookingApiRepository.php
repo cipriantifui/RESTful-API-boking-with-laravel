@@ -38,4 +38,17 @@ class BookingApiRepository implements RepositoryInterface
 		return $booking->toJson();
     }
 
+    public function update(Request $request, Booking $booking)
+	{
+		//Update
+		$booking->update([
+            'start_date' => $request->input('start_date'),
+            'end_date' => $request->input('end_date'),
+            'rooms' => $request->input('rooms'),
+            'guests' => $request->input('guests'),
+		]);
+		
+        return $booking->toJson();
+	}
+
 }

@@ -54,9 +54,9 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Booking $booking)
     {
-        //
+        return response($this->bookingRepository->update($request, $booking), 200);
     }
 
     /**

@@ -2,33 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Api\LoginRequest;
 use App\Http\Requests\Api\RegisterRequest;
 use App\Http\Controllers\Controller;
-use App\Factories\UserFactory;
+use App\Factories\AuthFactory;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use Exception;
-use Illuminate\Support\Facades\Validator;
+
 
 class AuthController extends Controller
 {
 
-    private $userRepository;
+    private $authRepository;
 
-    public function  __construct(UserFactory $userFactory)
+    public function  __construct(AuthFactory $authFactory)
     {
-        $this->userRepository = $userFactory::createApi();
+        $this->authRepository = $authFactory::createApi();
     }
 
     public function register(RegisterRequest $request){
-        return response($this->userRepository->create($request), 201);
+        return response($this->authRepository->create($request), 201);
     }
 
     public function authenticate(LoginRequest $request){
-        return $this->userRepository->login($request);
+        return $this->authRepository->login($request);
     }
 
     public function getAuthenticatedUser()
