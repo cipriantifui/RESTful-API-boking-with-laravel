@@ -3,8 +3,8 @@ namespace App\Repositories\Api;
 
 use App\User;
 use App\Interfaces\RepositoryInterface;
-use App\Http\Requests\Api\CreateUserRequest;
-use App\Http\Requests\Api\UpdateUserRequest;
+use App\Http\Requests\Api\UserStoreRequest;
+use App\Http\Requests\Api\UserModifyRequest;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -12,7 +12,7 @@ class UserApiRepository implements RepositoryInterface
 {
     public function get($type, $value)
 	{
-		User::where($type, $value)->first()->toJson();
+		return User::where($type, $value)->first()->toJson();
     }
     
     public function getAll($order = 'asc', $limit = 50)
@@ -42,7 +42,7 @@ class UserApiRepository implements RepositoryInterface
 		return $user;
 	}
 	
-	public function insert(CreateUserRequest $request)
+	public function insert(UserStoreRequest $request)
 	{
 		$user =  User::create([
             'first_name' => $request->input('first_name'),
@@ -54,9 +54,12 @@ class UserApiRepository implements RepositoryInterface
 		return $user->toJson();
 	}
 	
-	public function update(UpdateUserRequest $request, User $user)
+	public function update(UserModifyRequest $request, User $user)
 	{
 		//Update
+		$request->validated();
+		User::findOrFail($user->id);
+
 		$user->update([
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
@@ -69,6 +72,8 @@ class UserApiRepository implements RepositoryInterface
 	
 	public function delete(User $user)
 	{
+		User::findOrFail($user->id);
+
 		$user->delete();
 	}
 

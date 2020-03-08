@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use App\Factories\UserFactory;
-use App\Http\Requests\Api\CreateUserRequest;
-use App\Http\Requests\Api\UpdateUserRequest;
+use App\Http\Requests\Api\UserStoreRequest;
+use App\Http\Requests\Api\UserModifyRequest;
 
 class UserController extends Controller
 {
@@ -35,7 +35,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateUserRequest $request)
+    public function store(UserStoreRequest $request)
     {
         return response($this->userRepository->insert($request), 201);
     }
@@ -48,6 +48,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        User::findOrFail($user->id);
         return $this->userRepository->get('id', $user->id);
     }
 
@@ -58,9 +59,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UserModifyRequest $request, User $user)
     {
-        return response($this->userRepository->update($request, $user), 200);
+        $validated = $request->validated();
+        return $this->userRepository->update($request, $user);
     }
 
     /**
@@ -71,8 +73,6 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $this->userRepository->delete($user);
-
-        return response('Deleted', 404);
+        return response($this->userRepository->delete($user), 404);
     }
 }
