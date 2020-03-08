@@ -4,7 +4,7 @@ namespace App\Repositories\Api;
 use App\Booking;
 use App\Interfaces\RepositoryInterface;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\Api\BookingModifyRequest;
+use App\Http\Requests\Api\BookingUpdateRequest;
 use App\Http\Requests\Api\BookingStoreRequest;
 
 class BookingApiRepository implements RepositoryInterface
@@ -42,7 +42,7 @@ class BookingApiRepository implements RepositoryInterface
 		return $booking->toJson();
     }
 
-    public function update(BookingModifyRequest $request, Booking $booking)
+    public function update(BookingUpdateRequest $request, Booking $booking)
 	{
         Booking::findOrFail($booking->id);
 

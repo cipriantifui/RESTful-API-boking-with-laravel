@@ -8,7 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserModifyRequest extends FormRequest
+class UserUpdateRequest extends FormRequest
 {
     /**
     * Determine if the user is authorized to make this request.
@@ -54,6 +54,6 @@ class UserModifyRequest extends FormRequest
     {
         $errors = (new ValidationException($validator))->errors();
         throw new HttpResponseException(response()->json(['errors' => $errors
-        ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
+        ], JsonResponse::HTTP_BAD_REQUEST));
     }
 }

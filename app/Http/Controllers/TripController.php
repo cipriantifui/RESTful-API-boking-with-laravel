@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Trip;
 use Illuminate\Http\Request;
+use App\Http\Requests\Api\TripStoreRequest;
+use App\Http\Requests\Api\TripUpdateRequest;
 use App\Factories\TripFactory;
 
 class TripController extends Controller
@@ -33,7 +35,7 @@ class TripController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TripStoreRequest $request)
     {
         return response($this->tripRepository->insert($request), 201);
     }
@@ -60,12 +62,12 @@ class TripController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Trip  $trip
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trip $trip)
+    public function update(TripUpdateRequest $request, Trip $trip)
     {
-        return response($this->tripRepository->update($request, $trip), 200);
+        return response($this->tripRepository->update($request, $trip));
     }
 
     /**
@@ -76,8 +78,6 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip)
     {
-        $this->tripRepository->delete($trip);
-
-        return response('Deleted', 200);
+        return response($this->tripRepository->delete($trip), 404);
     }
 }

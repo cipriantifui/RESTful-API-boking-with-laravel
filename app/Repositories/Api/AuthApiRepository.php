@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthApiRepository implements AuthInterface
 {
+	
     public function create(RegisterRequest $request)
 	{
-		//Create user, generate token and return
         $user =  User::create([
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
@@ -27,7 +27,6 @@ class AuthApiRepository implements AuthInterface
 
 	public function login(LoginRequest $request)
 	{
-		//Attempt validation
         $credentials = $request->only(['email','password']);
 
 		try {

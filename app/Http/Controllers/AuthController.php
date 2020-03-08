@@ -20,32 +20,25 @@ class AuthController extends Controller
         $this->authRepository = $authFactory::createApi();
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  RegisterRequest  $request
+     * @return \Illuminate\Http\Response
+     */
     public function register(RegisterRequest $request){
         return response($this->authRepository->create($request), 201);
     }
 
+    /**
+     * authenticate user
+     *
+     * @param  LoginRequest  $request
+     * @return \Illuminate\Http\Response
+     */
     public function authenticate(LoginRequest $request){
+        
         return $this->authRepository->login($request);
     }
 
-    public function getAuthenticatedUser()
-    {
-        try {
-
-            if (! $user = JWTAuth::parseToken()->authenticate()) {
-                    return response()->json(['user_not_found'], 404);
-            }
-
-        }catch (Exception $e) {
-            if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenInvalidException){
-                return response()->json(['status' => 'Token is Invalid']);
-            }else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenExpiredException){
-                return response()->json(['status' => 'Token is Expired']);
-            }else{
-                return response()->json(['status' => 'Authorization Token not found']);
-            }
-        }
-
-        return response()->json(compact('user'));
-    }
 }

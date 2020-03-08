@@ -5,12 +5,20 @@ namespace App\Repositories\Api;
 use App\Interfaces\FilterRepositoryInterface;
 use App\Trip;
 use Illuminate\Http\Request;
+use App\Http\Requests\Api\TripStoreRequest;
+use App\Http\Requests\Api\TripUpdateRequest;
 use Illuminate\Support\Str;
 
 class TripApiRepository implements FilterRepositoryInterface {
 
     public function get($type, $value) {
-		return Trip::where($type, $value)->first()->toJson();
+
+        $trip = Trip::where($type, $value)->first();
+        
+        if($trip==null)
+            Trip::findOrFail(-1);
+        
+        return $trip->toJson();
     }
 
     public function getAll($order = 'desc', $limit = 50) {
@@ -19,7 +27,6 @@ class TripApiRepository implements FilterRepositoryInterface {
             ->take($limit)
             ->get()
             ->toJson();
-
     }
 
     public function filter(Request $request){
@@ -53,7 +60,7 @@ class TripApiRepository implements FilterRepositoryInterface {
         return $tripQuery->get();
     }
 
-    public function insert(Request $request)
+    public function insert(TripStoreRequest $request)
 	{
 
         $tripQuery = Trip::query()
@@ -75,9 +82,9 @@ class TripApiRepository implements FilterRepositoryInterface {
 		return $trip->toJson();
     }
     
-    public function update(Request $request, Trip $trip)
+    public function update(TripUpdateRequest $request, Trip $trip)
 	{
-		//Update
+        Trip::findOrFail($trip->id);
 		$trip->update([
             'title' => $request->input('title'),
             'description' => $request->input('description'),
@@ -92,6 +99,7 @@ class TripApiRepository implements FilterRepositoryInterface {
     
     public function delete(Trip $trip)
 	{
+        Trip::findOrFail($trip->id);
 		$trip->delete();
 	}
     
