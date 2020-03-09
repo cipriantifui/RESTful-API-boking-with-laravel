@@ -7,28 +7,28 @@
 <p><strong>6. Seeders:</strong><br> php artisan db:seed</p>
 
 <h4>User route</h4>  
-GET	/api/users index
-POST /api/users store
-GET	/api/users/{user} show
-PUT /api/users/{user} update
-DELETE /api/users/{user} delete
+GET	/api/users index <br>
+POST /api/users store <br>
+GET	/api/users/{user} show <br>
+PUT /api/users/{user} update <br>
+DELETE /api/users/{user} delete <br>
 
 <h4>Trip route</h4>  
-GET	/api/trips index
-GET	/api/trips/search search
-POST /api/trips store
-GET	/api/trips/{slug} show
-PUT /api/trips/{trip} update
-DELETE /api/trips/{trip} delete
+GET	/api/trips index <br>
+GET	/api/trips/search search <br>
+POST /api/trips store <br>
+GET	/api/trips/{slug} show <br>
+PUT /api/trips/{trip} update <br>
+DELETE /api/trips/{trip} delete <br>
 
 <h4>Booking route</h4>  
-GET	/api/reservations index
-POST /api/reservations store
-GET	/api/reservations/{booking} show
-PUT /api/reservations/{booking} update
-DELETE /api/reservations/{booking} delete
+GET	/api/reservations index <br>
+POST /api/reservations store <br>
+GET	/api/reservations/{booking} show <br>
+PUT /api/reservations/{booking} update <br>
+DELETE /api/reservations/{booking} delete <br>
 
 <h4>Authenticate route</h4>  
-POST /api/register
-POST /api/authenticate
+POST /api/register <br>
+POST /api/authenticate <br>
 
