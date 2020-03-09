@@ -22,5 +22,8 @@ class TripsTableSeeder extends Seeder
         
         $slug3 = Str::slug('Isla Grand Beach Resort 3' , '-');
         $trip3 = Trip::create(['slug' => $slug3, 'title' => 'Isla Grand Beach Resort', 'description' => 'The Isla Grand Beach Resort is the premier resort along the Texas Gulf Coast. Located right on the beach, in the southern portion of South Padre Island, the Isla Grand Beach Resort is easy to find and conveniently located near all of South Padre\'s top attractions.', 'start_date' => '2020-03-24 00:00:00', 'end_date' => '2020-03-30 00:00:00', 'location'=>'Spain', 'price'=> '800']);
+
+        $slug4 = Str::slug('Hilton Garden Inn South Padre Island 4' , '-');
+        $trip4 = Trip::create(['slug' => $slug3, 'title' => 'Hilton Garden Inn South Padre Island', 'description' => 'Our Hilton Garden Inn hotel is set among the dunes of the Gulf of Mexico beachfront and offers contemporary convenience on the north side of the island.', 'start_date' => '2020-04-01 00:00:00', 'end_date' => '2020-04-04 00:00:00', 'location'=>'Spain', 'price'=> '420']);
     }
 }
