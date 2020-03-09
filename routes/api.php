@@ -18,7 +18,7 @@ Route::group([
 	'middleware' => 'api',
 	'prefix' => 'auth'
 ], function () {
-    Route::post('authenticate', 'AuthController@authenticate')->name('api.authenticate')->middleware("throttle:8,1");
+    Route::post('authenticate', 'AuthController@authenticate')->name('api.authenticate');
     Route::post('register', 'AuthController@register')->name('api.register');
 });
 // users api routes
