@@ -22,11 +22,11 @@ PUT /api/trips/{trip} <br>
 DELETE /api/trips/{trip} <br>
 
 <h4>Booking route</h4>  
-GET	/api/reservations <br>
-POST /api/reservations <br>
-GET	/api/reservations/{booking} <br>
-PUT /api/reservations/{booking} <br>
-DELETE /api/reservations/{booking} <br>
+GET	/api/booking <br>
+POST /api/booking <br>
+GET	/api/booking/{booking} <br>
+PUT /api/booking/{booking} <br>
+DELETE /api/booking/{booking} <br>
 
 <h4>Authenticate route</h4>  
 POST /api/register <br>
