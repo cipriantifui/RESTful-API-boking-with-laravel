@@ -28,19 +28,13 @@ class TripUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
+            'title' => 'required|max:25',
             'description' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'location' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'location' => 'required|max:25',
             'price' => 'required|numeric',
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        $errors = (new ValidationException($validator))->errors();
-        throw new HttpResponseException(response()->json(['errors' => $errors
-        ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
-    }
 }

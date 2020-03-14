@@ -28,8 +28,8 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => 'required|max:25',
+            'last_name' => 'required|max:25',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6'
         ];
@@ -50,10 +50,4 @@ class UserStoreRequest extends FormRequest
         ];
     }
     
-    protected function failedValidation(Validator $validator)
-    {
-        $errors = (new ValidationException($validator))->errors();
-        throw new HttpResponseException(response()->json(['errors' => $errors
-        ], JsonResponse::HTTP_UNPROCESSABLE_ENTITY));
-    }
 }

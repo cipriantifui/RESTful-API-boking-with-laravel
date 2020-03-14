@@ -28,8 +28,8 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'first_name' => 'required|max:25',
+            'last_name' => 'required|max:25',
             'email' => 'required|email',
             'password' => 'required|min:6'
         ];
@@ -50,10 +50,4 @@ class UserUpdateRequest extends FormRequest
         ];
     }
 
-    protected function failedValidation(Validator $validator)
-    {
-        $errors = (new ValidationException($validator))->errors();
-        throw new HttpResponseException(response()->json(['errors' => $errors
-        ], JsonResponse::HTTP_BAD_REQUEST));
-    }
 }
