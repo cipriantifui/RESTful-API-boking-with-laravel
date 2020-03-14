@@ -44,8 +44,6 @@ class BookingApiRepository implements RepositoryInterface
 
     public function update(BookingUpdateRequest $request, Booking $booking)
 	{
-        Booking::findOrFail($booking->id);
-
 		$booking->update([
             'start_date' => $request->input('start_date'),
             'end_date' => $request->input('end_date'),
@@ -58,8 +56,6 @@ class BookingApiRepository implements RepositoryInterface
     
     public function delete(Booking $booking)
 	{
-        Booking::findOrFail($booking->id);
-
 		$booking->delete();
 	}
 

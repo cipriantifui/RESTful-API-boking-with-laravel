@@ -31,5 +31,5 @@ Route::resource('trips', 'TripController');
 
 // reservations api routes
 Route::group(['middleware' => ['jwt.verify']], function() {
-    Route::resource('reservations', 'BookingController');
+    Route::resource('booking', 'BookingController');
 });

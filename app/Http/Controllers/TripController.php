@@ -54,7 +54,6 @@ class TripController extends Controller
     public function search(Request $request)
     {
         $trip = $this->tripRepository->filter($request);
-        
         return $trip;
     }
 

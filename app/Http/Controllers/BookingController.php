@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Booking;
-use Illuminate\Http\Request;
 use App\Factories\BookingFactory;
 use App\Http\Requests\Api\BookingUpdateRequest;
 use App\Http\Requests\Api\BookingStoreRequest;
@@ -45,10 +44,9 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Booking $booking)
     {
-        Booking::findOrFail($id);
-        return $this->bookingRepository->get('id', $id);
+        return $this->bookingRepository->get('id', $booking->id);
     }
 
     /**

@@ -40,7 +40,6 @@ class UserApiRepository implements RepositoryInterface
 	
 	public function update(UserUpdateRequest $request, User $user)
 	{
-		User::findOrFail($user->id);
 
 		$user->update([
             'first_name' => $request->input('first_name'),
@@ -54,8 +53,6 @@ class UserApiRepository implements RepositoryInterface
 	
 	public function delete(User $user)
 	{
-		User::findOrFail($user->id);
-
 		$user->delete();
 	}
 

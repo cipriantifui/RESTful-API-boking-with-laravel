@@ -24,7 +24,6 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userRepository->getAll();
-        
         return $users;
     }
 
@@ -47,7 +46,6 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        User::findOrFail($user->id);
         return $this->userRepository->get('id', $user->id);
     }
 
@@ -60,7 +58,6 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, User $user)
     {
-        $validated = $request->validated();
         return $this->userRepository->update($request, $user);
     }
 
