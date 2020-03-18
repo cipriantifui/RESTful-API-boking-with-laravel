@@ -35,3 +35,4 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 });
 
 //add new route
+// aici noua ruta 2
