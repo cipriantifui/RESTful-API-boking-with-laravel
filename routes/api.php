@@ -33,3 +33,5 @@ Route::resource('trips', 'TripController');
 Route::group(['middleware' => ['jwt.verify']], function() {
     Route::resource('booking', 'BookingController');
 });
+
+//add new route
